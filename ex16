@@ -1,0 +1,34 @@
+def graph_input():
+    n = int(input())
+    G = {}
+    for i in range(n):
+        a,b = input().split()
+        if a not in G:
+            G[a] = {b}
+        else:
+            G[a].add(b)
+        if b not in G:
+            G[b] = set()
+    return G
+
+def bfs(v):
+    
+    if v in visited:
+        return
+    visited.add(v)
+    BFS.append(v)
+    for i in G[v]:
+        if not i in visited:
+            Q.append(i)
+    while Q:
+        bfs(Q.pop(0))
+
+G = graph_input()
+v= input()
+visited = set()
+Q = []
+BFS = []
+start = v
+bfs(start)
+for elem in BFS:
+    print(elem)
