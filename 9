@@ -1,0 +1,25 @@
+a = int(input())
+let=[0]*a*2
+tel=[0]*a*2
+r = 0
+for i in range(a):
+    x, y = input().split(' ')
+    if x not in let:
+        let[r]=x
+        tel[r]+=1
+        r+=1
+    else:
+        tel[let.index(x)]+=1
+    if y not in let:
+        let[r]=y
+        tel[r]+=1
+        r+=1
+    else:
+        tel[let.index(y)]+=1
+dict={}
+for i in range(2*a):
+    if let[i]!=0:
+        dict[let[i]] = {tel[i]}
+keys=dict.keys()
+for i in sorted(keys):
+    print(i, str(dict[i]).strip()[1])
