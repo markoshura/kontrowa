@@ -1,0 +1,10 @@
+a = int(input())
+d = []
+for i in range(a):
+    s = list(input().split(' '))
+    for e in range(a):
+        if int(s[e]) == 1:
+            d.append(i+1)
+            d.append(e+1)
+for i in range(len(d)//2):
+    print(d[2*i], d[2*i+1])
