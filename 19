@@ -1,0 +1,45 @@
+__author__ = 'Lev'
+
+def inpyt_g():
+
+    M = input()
+    M = int(M)
+    G={}
+    for i in range(M):
+        N_1, N_2= input().split()
+        if N_1 not in G:
+            G[N_1]=set()
+            G[N_1].add(N_2)
+        if N_1 in G:
+            G[N_1].add(N_2)
+        if N_2 not in G:
+            G[N_2]=set()
+    return G
+def DACSTRER(G,start):
+    way_star={}
+    for V in G:
+        way_star[V]=float('+inf')
+    way_star[start]=0
+    fire=set()
+    fire.add(start)
+    while fire:
+        V_0=fire.pop()
+        for nei in G[V_0]:
+            if way_star[V_0]+1<way_star[nei]:
+                way_star[nei]=way_star[V_0]+1
+                fire.add(nei)
+                fire.add(V_0)
+    for h in way_star:
+        if way_star[h]==float('+inf'):
+            way_star[h]=-1
+    return way_star
+def pprint(J):
+    L=[]
+    for t in J:
+       L.append(t)
+    L.sort()
+    for u in L:
+        print(u,J[u])
+G=inpyt_g()
+way_star=DACSTRER(G,input())
+pprint(way_star)
