@@ -1,0 +1,24 @@
+import pprint
+n = int(input())
+G = {}
+GObr ={}
+for i in range(n):
+    a,b = [x for x in input().split()]
+    if a not in G:
+        G[a] = set()
+        GObr[a] = set()
+    if b not in G:
+        G[b] = set()
+        GObr[b] = set ()
+    G[a].add(b)
+    G[b].add(a)
+c = [key for key in G]
+c = sorted(c)
+for key in c:
+    for d in c:
+        if d!= key:
+            if d not in G[key] and d not in GObr[key]:
+               GObr[key].add(d)
+            if key not in G[d] and key not in GObr[d]:
+               GObr[d].add(key)
+pprint.pprint(GObr)
