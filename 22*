@@ -1,0 +1,83 @@
+
+def inpyt_g():
+
+    M = input()
+    M = int(M)
+    G={}
+    for i in range(M):
+        N_1, N_2= input().split( )
+        if N_1 not in G:
+            G[N_1]=[set(),set()]
+            G[N_1][0].add(N_2)
+        if N_1 in G:
+            G[N_1][0].add(N_2)
+        if N_2 not in G:
+            G[N_2]=[set(),set()]
+            G[N_2][1].add(N_1)
+
+        if N_2 in G:
+            G[N_2][1].add(N_1)
+    return G
+def DACSTRER(G,start):
+    way_star={}
+    for V in G:
+        way_star[V]=float('+inf')
+    way_star[start]=0
+    fire=set()
+    fire.add(start)
+    while fire:
+        V_0=fire.pop()
+
+        for nei in G[V_0][0]:
+            if way_star[V_0]+1<way_star[nei]:
+                way_star[nei]=way_star[V_0]+1
+                fire.add(nei)
+                fire.add(V_0)
+    for h in way_star:
+        if way_star[h]==float('+inf'):
+            way_star[h]=-1
+    return way_star
+def recovery_way_from_a_to_b(G,way_star,a,b):
+    if way_star[b]==-1:
+        return -1
+
+    way=[b]
+    nei=b
+
+    while nei!=a:
+        i=1
+        
+        privat_nei=''
+        for nei_ in G[nei][1]:
+            if i==1 and way_star[nei_]==way_star[nei]-1:
+                way.append(nei_)
+                privat_nei=nei_
+                i=0
+        nei=privat_nei
+
+    for i in range(len(way)//2):
+        way[i],way[-i-1]=way[-i-1],way[i]
+
+
+    return way
+def pprint(J):
+    L=[]
+    for t in J:
+       L.append(t)
+    L.sort()
+    for u in L:
+        print(u,J[u])
+G=inpyt_g()
+
+X=input()
+way_X=DACSTRER(G,X)
+N=int(input())
+ways=[]
+
+for i in range(N):
+    ways.append(recovery_way_from_a_to_b(G,way_X,X,input()))
+for t in ways:
+    if t!=-1:
+      print(*t)
+    else:
+        print(-1)
