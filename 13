@@ -1,0 +1,73 @@
+
+__author__ = 'Home'
+def digraph_from_input():
+    M=int(input())
+    digraph={}
+    for i in range(M):
+        a,b =input().split( )
+        if a in digraph:
+            digraph[a].add(b)
+        if not a in digraph:
+            digraph[a]=set()
+            digraph[a].add(b)
+        if b not in digraph:
+            digraph[b]=set()
+    return digraph
+def check_a_b(G,a,b):
+    if b in G[a]:
+        return True
+    else:
+        for nei in G[a]:
+            if b in G[nei]:
+                return True
+    return False
+def square_G(G):
+    fire=set()
+    square={}
+    for V in G:
+        for U in G:
+            if  ((V,U) not in fire):
+                resalt_1=check_a_b(G,V,U)
+                resalt_2=check_a_b(G,U,V)
+                if resalt_1:
+                    if V in square:
+                        square[V].add(U)
+                    else:
+                        square[V]=set()
+                        square[V].add(U)
+
+                if resalt_2:
+                    if U in square:
+                        square[U].add(V)
+                    else:
+                        square[U]=set()
+                        square[U].add(V)
+
+                fire.add((U,V))
+                fire.add((V,U))
+            elif V==U and V in G[U]:
+                if V in square:
+                        square[V].add(U)
+                else:
+                        square[V]=set()
+                        square[V].add(U)
+    for V in G:
+            if V not in square:
+                square[V]=set()
+    return square
+def pprint(gigraph):
+    dig=[]
+    for g in digraph:
+       dig.append(g)
+    dig.sort()
+    for i in range(len(dig)-1):
+      if i==0 :
+        print('{',"'",dig[i],"'",': ',digraph[dig[i]],',',sep='')
+
+      else:
+        print(' ',"'",dig[i],"'",': ',digraph[dig[i]],',',sep='')
+    print(' ',"'",dig[-1],"'",': ',digraph[dig[-1]],'}',sep='')
+
+T=digraph_from_input()
+digraph=square_G(T)
+pprint(digraph)
