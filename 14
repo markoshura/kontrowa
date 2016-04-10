@@ -1,0 +1,55 @@
+__author__ = 'Home'
+def check_a_b(G,a,b):
+    if b in G[a]:
+        return True
+
+    return False
+def square_G(G):
+    fire=set()
+    square={}
+    for V in G:
+        for U in G:
+            if  ((V,U) not in fire):
+                resalt_1=check_a_b(G,U,V)
+                resalt_2=check_a_b(G,V,U)
+                if resalt_1:
+                    if V in square:
+                        square[V].add(U)
+                    else:
+                        square[V]=set()
+                        square[V].add(U)
+
+                if resalt_2:
+                    if U in square:
+                        square[U].add(V)
+                    else:
+                        square[U]=set()
+                        square[U].add(V)
+
+                fire.add((U,V))
+                fire.add((V,U))
+            elif V==U and V in G[U]:
+                if V in square:
+                        square[V].add(U)
+                else:
+                        square[V]=set()
+                        square[V].add(U)
+    for V in G:
+            if V not in square:
+                square[V]=set()
+    return square
+def pprint(digraph):
+    dig=[]
+    for g in digraph:
+       dig.append(g)
+    dig.sort()
+    for i in range(len(dig)-1):
+      if i==0 :
+        print('{',"'",dig[i],"'",': ',digraph[dig[i]],',',sep='')
+
+      else:
+        print(' ',"'",dig[i],"'",': ',digraph[dig[i]],',',sep='')
+    print(' ',"'",dig[-1],"'",': ',digraph[dig[-1]],'}',sep='')
+G=eval(input())
+O_G=square_G(G)
+pprint(O_G)
