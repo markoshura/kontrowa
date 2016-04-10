@@ -1,0 +1,49 @@
+__author__ = 'Lev'
+
+def inpyt_g():
+
+    M = input()
+    M = int(M)
+    G={}
+    for i in range(M):
+        N_1, N_2= input().split()
+        if N_1 not in G:
+            G[N_1]=set()
+            G[N_1].add(N_2)
+        if N_1 in G:
+            G[N_1].add(N_2)
+        if N_2 not in G:
+            G[N_2]=set()
+    return G
+def check_way_a_to_b(a,b):
+    global G
+    global time
+    time=[]
+    fire=set()
+    mark_time(G,a,fire)
+    if b in time:
+        return True
+    return False
+
+time=[]
+def mark_time(G,start,fire):
+    global time
+    fire.add(start)
+    time.append(start)
+
+    for nei in G[start]:
+        if nei not in fire:
+
+          mark_time(G,nei,fire)
+
+check_way=[]
+G=inpyt_g()
+n =int(input())
+for i in range(n):
+    a, b=input().split( )
+    if check_way_a_to_b(a,b):
+        check_way.append('YES')
+    else:
+        check_way.append('NO')
+for f in check_way:
+    print(f)
