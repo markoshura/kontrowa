@@ -1,0 +1,8 @@
+import pprint
+digraph = eval (input())
+for elem in digraph:
+    for i in digraph[elem]:
+        if i not in digraph:
+          digraph[i] = elem
+        else: digraph[i].add(elem)
+pprint.pprint(digraph)
