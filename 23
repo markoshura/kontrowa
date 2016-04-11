@@ -1,0 +1,39 @@
+__author__ = 'Lev'
+
+def inpyt_g():
+
+    M = input()
+    M = int(M)
+    G={}
+    for i in range(M):
+        N_1, N_2= input().split()
+        if N_1 not in G:
+            G[N_1]=set()
+            G[N_1].add(N_2)
+        if N_1 in G:
+            G[N_1].add(N_2)
+        if N_2 not in G:
+            G[N_2]=set()
+
+    return G
+fire=set()
+parents={}
+def mark_time(G,start):
+    global fire
+    global parents
+    fire.add(start)
+
+
+    for nei in G[start]:
+        if nei not in fire:
+          parents[nei]=start
+          mark_time(G,nei)
+
+
+G=inpyt_g()
+
+
+X=input()
+parents[X]=None
+mark_time(G,X)
+print(parents)
