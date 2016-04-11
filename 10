@@ -1,0 +1,33 @@
+import collections
+import pprint
+def transform(coh_list, adj_list = {}):
+    for elem in coh_list:
+        if elem[0] not in adj_list:
+            adj_list[elem[0]] = {elem[1]}
+        else:
+            adj_list[elem[0]].add(elem[1])
+        if elem[1] not in adj_list:
+            adj_list[elem[1]] = {elem[0]}
+        else:
+            adj_list[elem[1]].add(elem[0]) 
+        if elem[0] not in vertex:
+            vertex[elem[0]] = True 
+        if elem[1] not in vertex:
+            vertex[elem[1]] = True
+    return adj_list
+
+
+vertex = {}
+n = int(input())
+coh_list = [input().split() for i in range(n)] 
+adj_list = transform(coh_list)
+
+for elem in adj_list:
+    vertex[elem] = len(adj_list[elem])
+
+eilerov = 'YES'
+for elem in vertex:
+    if vertex[elem] % 2 != 0:
+        eilerov = 'NO'
+        break 
+print(eilerov)
