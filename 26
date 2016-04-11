@@ -1,0 +1,55 @@
+__author__ = 'Home'
+def inpyt_g():
+
+    M = input()
+    M = int(M)
+    G={}
+    G_1=set()
+    for i in range(M):
+        N_1, N_2= input().split()
+
+        if N_1 in G:
+            G[N_1][0].add(N_2)
+
+        if N_1 not in G:
+             G[N_1]=[set(),0]
+             G[N_1][0].add(N_2)
+
+        if N_2 in G:
+            G[N_2][1]=1
+        if N_2 not in G:
+           G[N_2]=[set(),0]
+           G[N_2][1]=1
+    for V in G:
+        if G[V][1]==0:
+            G_1.add(V)
+    return (G,G_1)
+def depth_G(G,start,fire_0,fire):
+    fire.add(start)
+    fire_0_0=[]
+    for nei in G[start][0]:
+        if nei not in fire:
+            fire_0=depth_G(G,nei,fire_0,fire)[0]
+
+
+    fire_0=[start]+fire_0
+    return (fire_0, fire)
+def do_list(G,G_1):
+    SORT=[]
+    fire=set()
+    while G_1:
+        x=G_1.pop()
+
+        fire_0=[]
+        SORT_0,fire=depth_G(G,x,fire_0,fire)
+
+
+        SORT= SORT_0+SORT
+        G_1.difference_update(fire)
+
+    print(*SORT)
+    
+   
+G,G_1=inpyt_g()
+
+do_list(G,G_1)
